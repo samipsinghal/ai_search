@@ -56,6 +56,14 @@ def parse_args() -> argparse.Namespace:
                    help="Weight for superdomain-level novelty bonus.")
     p.add_argument("--novelty-scale", type=float, default=0.001,
                    help="Scale for novelty; lower stays closer to pure BFS.")
+    
+    p.add_argument("--max-html-bytes", type=int, default=256*1024,
+               help="Cap HTML bytes to read before parsing (default: 262144).")
+    p.add_argument("--use-bs4", action="store_true",
+               help="Use BeautifulSoup parser (robust but slower). Default is fast stdlib parser.")
+    p.add_argument("--debug-metrics", action="store_true",
+               help="Write extra timing columns to TSV (connect/read/parse times, link counts).")
+
     return p.parse_args()
 
 
@@ -72,6 +80,9 @@ def main() -> None:
     ensure_parent_dir(args.log)
 
     # 3) Build config (note the underscore in no_robots)
+
+    
+    # --- where you build cfg ---
     cfg = Config().with_overrides(
         user_agent=args.user_agent,
         respect_robots=not args.no_robots,
@@ -83,7 +94,12 @@ def main() -> None:
         novelty_weight_domain=args.novelty_domain,
         novelty_weight_superdomain=args.novelty_super,
         novelty_scale=args.novelty_scale,
+        # new perf/diagnostic knobs
+        max_html_bytes=args.max_html_bytes,
+        use_bs4=args.use_bs4,
+        debug_metrics=args.debug_metrics,
     )
+
 
     # 4) Run crawler
     crawler = Crawler(cfg, seeds)

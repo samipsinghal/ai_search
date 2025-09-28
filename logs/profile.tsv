@@ -1,0 +1,8 @@
+timestamp	url	status	bytes	depth	priority	domain	domain_count	superdomain	super_count	elapsed_ms	ct	t_connect_ms	t_read_ms	t_parse_ms	links_found	links_enqueued	html_truncated
+
+STAT	pages_crawled	0
+STAT	total_bytes	0
+STAT	elapsed_sec	411.059
+STAT	rate_pages_per_sec	0.00
+STAT	num_404	0
+STAT	num_403	0
