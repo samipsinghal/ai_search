@@ -1,0 +1,16 @@
+# Second seed set (use different actual search-result URLs than seeds.txt)
+# One URL per line. Lines starting with # are ignored.
+
+https://www.imf.org/                   # example placeholder
+https://www.oecd.org/                  # example placeholder
+https://www.ftadviser.com/             # example placeholder
+https://www.morningstar.com/           # example placeholder
+https://www.cnbc.com/                  # example placeholder
+https://www.economist.com/             # example placeholder
+https://www.spglobal.com/              # example placeholder
+https://www.spglobal.com/ratings       # example placeholder
+https://www.alphavantage.co/           # example placeholder
+https://fred.stlouisfed.org/           # example placeholder
+
+# Replace with 10+ real result URLs for a different query/topic than run1.
+# Keep them diverse to help the frontier spread across domains early.

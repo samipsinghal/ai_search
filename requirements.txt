@@ -1,0 +1,4 @@
+# requirements.txt
+# Core crawler uses only Python standard library.
+# We rely on BeautifulSoup strictly for HTML parsing convenience.
+beautifulsoup4>=4.12.0

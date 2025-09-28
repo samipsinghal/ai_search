@@ -1,0 +1,79 @@
+# explain.txt
+
+CS6913 HW1 — Crawler Design and Rationale
+
+What this crawler is (and isn’t)
+--------------------------------
+This is a build-it-yourself web crawler that handles the core mechanics in the Python standard library:
+frontier management, robots.txt checks, HTTP fetching with UA/timeout, URL canonicalization, logging,
+and multi-threaded workers. For HTML parsing only, we use BeautifulSoup to survive broken markup.
+No frameworks, no scrapy/requests/bs4 alternatives, no database.
+
+Frontier order: BFS with domain diversity
+-----------------------------------------
+Goal: don’t get stuck inside one site; spread the crawl early.
+
+Priority function:
+    novelty = w_domain / log2(2 + pages_seen_in_domain)
+            + w_super  / log2(2 + pages_seen_in_superdomain)
+
+    priority = depth - novelty_scale * novelty
+
+Lower value means earlier in the queue. Depth dominates so it feels like BFS, while the small novelty
+term nudges lesser-seen domains/superdomains forward. We update domain counters before fetching to
+steer siblings.
+
+URL canonicalization and duplicates
+-----------------------------------
+We normalize URLs to reduce duplicates:
+- strip fragments (#foo)
+- lowercase scheme and host
+- drop default ports (80 for http, 443 for https)
+- keep query (?a=1) since it can change content
+A visited set of canonical URLs prevents revisits in the same run.
+
+Politeness: robots.txt and timeouts
+-----------------------------------
+- robots.txt is fetched per host via urllib.robotparser and cached. If it can’t be fetched, default is allow.
+- We identify via a user-provided User-Agent.
+- We set a per-request socket timeout to avoid hanging.
+
+Fetching
+--------
+- Standard library urllib only. If the response isn’t text/html, we read a small chunk (4 KB) to record some bytes
+  and move on quickly.
+- We collect status code, content type, body size, and elapsed time for logging and stats.
+
+Parsing
+-------
+- BeautifulSoup with the built-in “html.parser” extracts <a href> links.
+- We resolve relatives against the page URL, drop fragments, keep only http(s), and dedupe while preserving order.
+
+Logging
+-------
+One TSV row per visited URL:
+    timestamp, url, status, bytes, depth, priority, domain, domain_count, superdomain, super_count, elapsed_ms
+
+At the end we append summary stats:
+    pages_crawled, total_bytes, elapsed_sec, rate_pages_per_sec, num_404, num_403
+
+Constraints and limitations
+---------------------------
+- No per-host rate limiting or adaptive politeness.
+- Superdomain is a heuristic (last two labels), not PSL-aware.
+- In-memory only; a restart forgets state.
+- JavaScript-generated links are not executed, so they won’t be discovered.
+
+Bugs you might notice (declared)
+--------------------------------
+- Some servers lie about Content-Type; if they say non-HTML but serve HTML, we won’t parse it.
+- Redirect metrics aren’t broken out; we only log final fetch result per URL.
+- Very large HTML pages read fully; if memory becomes a concern, streaming parse would be needed.
+
+If more time…
+--------------
+- Add per-host rate limiting and a politeness queue.
+- Use the Public Suffix List to compute superdomains correctly.
+- Persist the visited set and resume a crawl.
+- Collect and report redirect chains and per-host stats.
+- HTML size cap with partial parse to avoid memory spikes.
