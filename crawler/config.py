@@ -16,20 +16,20 @@ DEFAULT_DISALLOWED_EXT: Set[str] = {
     ".css", ".js", ".mjs", ".ts",
     ".zip", ".tar", ".gz", ".tgz", ".rar", ".7z",
     ".apk", ".dmg", ".exe", ".bin", ".iso",
-    ".xml", ".rss", ".json", ".txt", ".csv",
+    ".rss", ".json", ".txt", ".csv",
     # do NOT add ".cms" here; many sites serve HTML with that extension
 }
 
 @dataclass(frozen=True)
 class Config:
     # Identity and politeness
-    user_agent: str = "NYU-CS6913-HW1/1.0 (CHANGE-ME; your_email@nyu.edu)"
+    user_agent: str = "NYU-CS6913-HW1/1.0 (SS; sks546@nyu.edu)"
     respect_robots: bool = True
     socket_timeout_sec: float = 5.0
 
     # Crawl limits
     threads: int = 16
-    max_pages: int = 5000
+    max_pages: int = 10000
     max_depth: int = 10
 
     # Content policy

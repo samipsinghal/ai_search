@@ -11,6 +11,19 @@ https://www.spglobal.com/              # example placeholder
 https://www.spglobal.com/ratings       # example placeholder
 https://www.alphavantage.co/           # example placeholder
 https://fred.stlouisfed.org/           # example placeholder
-
-# Replace with 10+ real result URLs for a different query/topic than run1.
-# Keep them diverse to help the frontier spread across domains early.
+https://www.rottentomatoes.com/
+https://letterboxd.com/
+https://www.themoviedb.org/
+https://www.allmovie.com/
+https://www.boxofficemojo.com/
+https://www.fandango.com/
+https://www.movie-locations.com/
+https://www.traileraddict.com/
+https://trailers.apple.com/
+https://www.moviequotes.com/
+https://www.moviemistakes.com/
+https://www.shortoftheweek.com/
+https://www.criterion.com/
+https://mubi.com/
+https://www.justwatch.com/
+https://www.icheckmovies.com/

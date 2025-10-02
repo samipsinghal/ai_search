@@ -241,7 +241,7 @@ class _CrawlItem:
 
 class Crawler:
     """
-    Built-by-hand crawler. No frameworks, no magic.
+    Built-by-hand crawler. 
 
     Typical usage:
         cfg = Config(user_agent="...", ...)

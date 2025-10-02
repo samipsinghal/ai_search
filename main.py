@@ -81,7 +81,6 @@ def main() -> None:
 
     # 3) Build config (note the underscore in no_robots)
 
-    
     # --- where you build cfg ---
     cfg = Config().with_overrides(
         user_agent=args.user_agent,
