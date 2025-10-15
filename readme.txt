@@ -1,6 +1,6 @@
 readme.txt
 
-CS6913 HW1 — Minimal BFS-like Web Crawler (stdlib crawl, BeautifulSoup parse)
+CS6913  — Minimal BFS-like Web Crawler (stdlib crawl, BeautifulSoup parse)
 
 Contents
 ========
